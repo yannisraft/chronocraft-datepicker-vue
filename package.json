@@ -1,8 +1,8 @@
 {
   "name": "chronocraft-datepicker-vue",
   "buildname": "chronocraftdatepickervuelib",
-  "version": "0.0.20",
-  "description": "A VueJS 3.0 building template to create your own components library",
+  "version": "0.0.1",
+  "description": "A VueJS 3.0 date picker component",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "unpkg": "dist/chronocraft-vue3-lib.min.js",
