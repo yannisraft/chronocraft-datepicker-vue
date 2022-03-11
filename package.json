@@ -1,6 +1,6 @@
 {
-  "name": "chronocraft-vue3-lib-template",
-  "buildname": "chronocraftvue3lib",
+  "name": "chronocraft-datepicker-vue",
+  "buildname": "chronocraftdatepickervuelib",
   "version": "0.0.20",
   "description": "A VueJS 3.0 building template to create your own components library",
   "main": "dist/cjs/index.js",
@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yannisraft/chronocraft-vue3-lib-template.git"
+    "url": "https://github.com/yannisraft/chronocraft-datepicker-vue.git"
   },
   "peerDependencies": {
     "core-js": "^3.6.5",

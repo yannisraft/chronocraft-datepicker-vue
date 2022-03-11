@@ -22,7 +22,7 @@ module.exports = {
             },
             {
                 text: 'Github',
-                link: 'https://github.com/yannisraft/chronocraft-vue3-lib-template',
+                link: 'https://github.com/yannisraft/chronocraft-datepicker-vue',
                 children: [],
             }
         ]

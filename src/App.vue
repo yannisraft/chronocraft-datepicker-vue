@@ -1,19 +1,16 @@
 <template>
   <h1>Chronocarft Library Test Playground</h1>
-  <CountDownTimer/>
-  <TimeClock/>
+  <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;"/>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import CountDownTimer from './components/CountDownTimer/CountDownTimer.vue';
-import TimeClock from './components/TimeClock/TimeClock.vue';
+import DatePicker from './components/DatePicker/DatePicker.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    CountDownTimer,
-    TimeClock
+    DatePicker    
   }
 });
 </script>
