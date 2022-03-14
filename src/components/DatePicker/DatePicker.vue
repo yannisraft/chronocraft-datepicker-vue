@@ -1,6 +1,11 @@
 <template>
 <div class="datepicker-container">
-    <input type="text" v-model="formatSelected" id="date" @focusin="OnFocusInput(true)" @mouseover="inputhovering = true" @mouseleave="inputhovering = false" name="datepicker" class="datepicker-input" />
+    <div class="pickerbtn" @click="OnFocusInput(true)" @mouseover="inputhovering = true" @mouseleave="inputhovering = false">
+        <slot :formatSelected="formatSelected"  name="inputfield">
+            <!-- <input type="text" v-model="formatSelected" id="date" @focusin="OnFocusInput(true)" @mouseover="inputhovering = true" @mouseleave="inputhovering = false" name="datepicker" class="datepicker-input" /> -->
+            <input type="text" v-model="formatSelected" id="date"  name="datepicker" class="datepicker-input" />
+        </slot>
+    </div>
     <div class="datepicker-panel notabsolute" @mouseover="datepickerhovering = true" @mouseleave="datepickerhovering = false" :style="{visibility: showdatepicker ? 'visible' : 'hidden'}">
         <div class="datepicker-header-year unselectable">
             <h4 @click="OpenSelectYear()">{{ yearlabel }}</h4>
@@ -54,7 +59,6 @@
 // Component created with Composition API
 // --------------------------------------
 
-
 import {
     defineComponent,
     ref,
@@ -79,8 +83,7 @@ import {
 
 export default defineComponent({
     name: 'DatePicker',
-    components: {
-    },
+    components: {},
     props: {
         showselecteddate: {
             type: Boolean,
@@ -93,10 +96,16 @@ export default defineComponent({
         rangepicker: {
             type: Boolean,
             default: false
+        },
+        autohide: {
+            type: Boolean,
+            default: true
         }
     },
     setup(props, context) {
-        const { ctx: _this }: any = getCurrentInstance()
+        const {
+            ctx: _this
+        }: any = getCurrentInstance()
         let thisapp: any = null;
         let showdatepicker = ref(false);
         let datepickerhovering = ref(false);
@@ -291,28 +300,36 @@ export default defineComponent({
                 //this.$forceUpdate();
                 _this.$forceUpdate();
 
-                showdatepicker.value = false;
+                setTimeout(()=> {
+                    if(props.autohide) showdatepicker.value = false;                    
+                    context.emit("on-date-selected", {date: dayitem.date});
+                }, 500);
+                
             } else {
                 if (rangePickStatus === 0) {
                     selectedDate.value = dayitem.date;
                     selectedDate_end.value = dayitem.date;
                     fulldatelabel.value = formatDate(dayitem.date, 'dd MMMM yyyy') + ' - ?';
                     _this.$forceUpdate();
-                    rangePickStatus = 1;
+                    rangePickStatus = 1;                    
                 } else if (rangePickStatus === 1) {
-                    if(dayitem.date < selectedDate.value)
-                    {
+                    if (dayitem.date < selectedDate.value) {
                         selectedDate_end.value = selectedDate.value;
                         selectedDate.value = dayitem.date;
                     } else {
                         selectedDate_end.value = dayitem.date;
                     }
-                    
+
                     fulldatelabel.value = (fulldatelabel.value).slice(0, -1);
                     fulldatelabel.value += formatDate(dayitem.date, 'dd MMMM yyyy');
                     rangeTotalDays.value = getDiffInDays(selectedDate_end.value, selectedDate.value);
                     _this.$forceUpdate();
                     rangePickStatus = 0;
+                    
+                    setTimeout(()=> {
+                        if(props.autohide) showdatepicker.value = false;   
+                        context.emit("on-date-selected", {date: selectedDate.value, enddate: selectedDate_end.value});
+                    }, 500);                    
                 } else {
 
                 }
@@ -366,7 +383,7 @@ export default defineComponent({
             yearsNamesArray.value[0].push(currentYear);
             yearsNamesArray.value[0].push(currentYear + 1);
 
-            var year:number = currentYear + 2;
+            var year: number = currentYear + 2;
             for (var f = 1; f < 6; f++) {
                 for (var d = 0; d < 3; d++) {
                     yearsNamesArray.value[f].push(year);
@@ -429,13 +446,12 @@ export default defineComponent({
                 }
 
                 if (dayitem.date.getDate() === selectedDate.value.getDate() && dayitem.date.getMonth() === selectedDate.value.getMonth() && dayitem.date.getFullYear() === selectedDate.value.getFullYear()) {
-                    if (props.rangepicker) {                        
-                        if (selectedDate_end.value.getDate() === selectedDate.value.getDate() && selectedDate_end.value.getMonth() === selectedDate.value.getMonth() && selectedDate_end.value.getFullYear() === selectedDate.value.getFullYear())
-                        {
+                    if (props.rangepicker) {
+                        if (selectedDate_end.value.getDate() === selectedDate.value.getDate() && selectedDate_end.value.getMonth() === selectedDate.value.getMonth() && selectedDate_end.value.getFullYear() === selectedDate.value.getFullYear()) {
                             isSelected = 1;
                         } else {
                             isSelected = 2;
-                        }                        
+                        }
                     } else {
                         isSelected = 1;
                     }
@@ -448,7 +464,7 @@ export default defineComponent({
         const isRangeDay = computed(() => {
             return (dayitem: any) => {
                 var isRange = false;
-                isRange = isDateBetweenDatesExcluding(selectedDate.value, selectedDate_end.value, dayitem.date);
+                if(props.rangepicker) isRange = isDateBetweenDatesExcluding(selectedDate.value, selectedDate_end.value, dayitem.date);
                 return isRange;
             }
         });
@@ -457,10 +473,10 @@ export default defineComponent({
             var result = "";
             if (!props.rangepicker) {
                 result = formatDate(selectedDate.value, props.dateformat);
-            } else{
-                result = formatDate(selectedDate.value, props.dateformat) + " - " + formatDate(selectedDate_end.value, props.dateformat);            
+            } else {
+                result = formatDate(selectedDate.value, props.dateformat) + " - " + formatDate(selectedDate_end.value, props.dateformat);
             }
-            
+
             return result;
         });
 

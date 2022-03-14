@@ -27,6 +27,8 @@
     margin-top: 2px;
     display: flex;
     flex-direction: column;
+    z-index: 1000000;
+    color: #000000;
 }
 
 .datepicker-header-year {
