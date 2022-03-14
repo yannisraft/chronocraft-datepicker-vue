@@ -50,12 +50,10 @@
 </div>
 </template>
 
-<script>
+<script lang="ts">
 // Component created with Composition API
 // --------------------------------------
 
-/// TODO
-// https://codepen.io/samwooly/pen/eyBmKz
 
 import {
     defineComponent,
@@ -63,7 +61,8 @@ import {
     reactive,
     onMounted,
     onBeforeMount,
-    computed
+    computed,
+    getCurrentInstance
 } from "vue";
 
 import {
@@ -97,20 +96,22 @@ export default defineComponent({
         }
     },
     setup(props, context) {
+        const { ctx: _this }: any = getCurrentInstance()
+        let thisapp: any = null;
         let showdatepicker = ref(false);
         let datepickerhovering = ref(false);
         let inputhovering = ref(false);
         let beginRow = "";
         let endRow = "";
-        let selectedDate = ref(new Date());
-        let selectedDate_end = ref(new Date());
+        let selectedDate: any = ref(new Date());
+        let selectedDate_end: any = ref(new Date());
         let rangePickStatus = 0;
         let rangeTotalDays = ref(0);
         let activeDate = new Date();
         let yearlabel = ref(selectedDate.value.getFullYear());
         let monthlabel = ref(formatDate(selectedDate.value, 'MMMM'));
         let fulldatelabel = ref(formatDate(selectedDate.value, 'dd MMMM yyyy'));
-        let daysArray = ref([
+        let daysArray: any = ref([
             [],
             [],
             [],
@@ -123,7 +124,7 @@ export default defineComponent({
             ['July', 'August', 'September'],
             ['October', 'November', 'December']
         ]);
-        let yearsNamesArray = ref([
+        let yearsNamesArray: any = ref([
             [],
             [],
             [],
@@ -139,7 +140,7 @@ export default defineComponent({
             RenderYears(new Date());
         }
 
-        function OnFocusInput(show) {
+        function OnFocusInput(show: any) {
             if (!show) {
                 if (!datepickerhovering.value) {
                     showdatepicker.value = show;
@@ -150,7 +151,7 @@ export default defineComponent({
 
         }
 
-        function addToCalendar(startDate, endDate, rowindex, monthType) {
+        function addToCalendar(startDate: any, endDate: any, rowindex: any, monthType: any) {
             let today = new Date();
             var currentMonth = false;
 
@@ -179,7 +180,7 @@ export default defineComponent({
             }
         }
 
-        function RenderMonth(renderDate) {
+        function RenderMonth(renderDate: any) {
             let rowindex = 0;
             daysArray.value = [
                 [],
@@ -254,7 +255,7 @@ export default defineComponent({
             UpdateMonthandYear(activeDate);
         }
 
-        function UpdateMonthandYear(newdate) {
+        function UpdateMonthandYear(newdate: any) {
             yearlabel.value = activeDate.getFullYear();
             monthlabel.value = formatDate(activeDate, 'MMMM');
         }
@@ -283,11 +284,12 @@ export default defineComponent({
             }
         }
 
-        function SelectDay(dayitem) {
+        function SelectDay(dayitem: any) {
             if (!props.rangepicker) {
                 selectedDate.value = dayitem.date;
                 fulldatelabel.value = formatDate(dayitem.date, 'dd/MM/yyyy');
-                this.$forceUpdate();
+                //this.$forceUpdate();
+                _this.$forceUpdate();
 
                 showdatepicker.value = false;
             } else {
@@ -295,7 +297,7 @@ export default defineComponent({
                     selectedDate.value = dayitem.date;
                     selectedDate_end.value = dayitem.date;
                     fulldatelabel.value = formatDate(dayitem.date, 'dd MMMM yyyy') + ' - ?';
-                    this.$forceUpdate();
+                    _this.$forceUpdate();
                     rangePickStatus = 1;
                 } else if (rangePickStatus === 1) {
                     if(dayitem.date < selectedDate.value)
@@ -309,7 +311,7 @@ export default defineComponent({
                     fulldatelabel.value = (fulldatelabel.value).slice(0, -1);
                     fulldatelabel.value += formatDate(dayitem.date, 'dd MMMM yyyy');
                     rangeTotalDays.value = getDiffInDays(selectedDate_end.value, selectedDate.value);
-                    this.$forceUpdate();
+                    _this.$forceUpdate();
                     rangePickStatus = 0;
                 } else {
 
@@ -317,7 +319,7 @@ export default defineComponent({
             }
         }
 
-        function SelectMonth(months_index, month_index) {
+        function SelectMonth(months_index: any, month_index: any) {
             var selectedmonthIndex = (months_index * 3 + month_index);
             activeDate.setMonth(selectedmonthIndex);
             RenderMonth(activeDate);
@@ -326,14 +328,14 @@ export default defineComponent({
             selectMonthActive.value = false;
         }
 
-        function SelectYear(year) {
+        function SelectYear(year: any) {
             activeDate.setFullYear(year);
             RenderMonth(activeDate);
             UpdateMonthandYear(activeDate);
             selectYearActive.value = false;
         }
 
-        function UpdateYears(nextyears) {
+        function UpdateYears(nextyears: any) {
             var date = new Date();
             var newdate = date;
             if (nextyears) {
@@ -348,7 +350,7 @@ export default defineComponent({
             RenderYears(newdate);
         }
 
-        function RenderYears(newyear) {
+        function RenderYears(newyear: any) {
             yearsNamesArray.value = [
                 [],
                 [],
@@ -358,13 +360,13 @@ export default defineComponent({
                 []
             ];
 
-            var currentYear = newyear.getFullYear();
+            let currentYear: any = newyear.getFullYear();
 
             yearsNamesArray.value[0].push(currentYear - 1);
             yearsNamesArray.value[0].push(currentYear);
             yearsNamesArray.value[0].push(currentYear + 1);
 
-            var year = currentYear + 2;
+            var year:number = currentYear + 2;
             for (var f = 1; f < 6; f++) {
                 for (var d = 0; d < 3; d++) {
                     yearsNamesArray.value[f].push(year);
@@ -386,7 +388,7 @@ export default defineComponent({
         });
 
         const isToday = computed(() => {
-            return (dayitem) => {
+            return (dayitem: any) => {
                 var istoday = false;
                 var today = new Date();
                 if (dayitem.date.getDate() === today.getDate() && dayitem.date.getMonth() === today.getMonth() && dayitem.date.getFullYear() === today.getFullYear()) {
@@ -397,7 +399,7 @@ export default defineComponent({
         });
 
         const isSelectedMonth = computed(() => {
-            return (months_index, month_index) => {
+            return (months_index: number, month_index: number) => {
                 var isselected = false;
                 var selectedmonthIndex = (months_index * 3 + month_index);
                 if (selectedmonthIndex === selectedDate.value.getMonth()) {
@@ -408,7 +410,7 @@ export default defineComponent({
         });
 
         const isSelectedYear = computed(() => {
-            return (year) => {
+            return (year: number) => {
                 var isselected = false;
                 if (year === selectedDate.value.getFullYear()) {
                     isselected = true;
@@ -418,7 +420,7 @@ export default defineComponent({
         });
 
         const isSelectedDay = computed(() => {
-            return (dayitem) => {
+            return (dayitem: any) => {
                 var isSelected = 0;
                 if (props.rangepicker) {
                     if (dayitem.date.getDate() === selectedDate_end.value.getDate() && dayitem.date.getMonth() === selectedDate_end.value.getMonth() && dayitem.date.getFullYear() === selectedDate_end.value.getFullYear()) {
@@ -444,7 +446,7 @@ export default defineComponent({
         });
 
         const isRangeDay = computed(() => {
-            return (dayitem) => {
+            return (dayitem: any) => {
                 var isRange = false;
                 isRange = isDateBetweenDatesExcluding(selectedDate.value, selectedDate_end.value, dayitem.date);
                 return isRange;

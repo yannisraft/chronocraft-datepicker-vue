@@ -1,71 +1,26 @@
-# Chronocraft VueJS 3.0 Library Template
-A VueJS 3.0 building template to create your own components library.
+# Chronocraft DatePicker - A VueJS 3.0 Efficient DatePicker Component
+The Chronocraft DatePicker is a flexible datepicker component created for Vue3
 
 ### Features
-- Vuejs 3.0 Based Library Template
-- Typescript support
-- Using Rollup to create final bundle ( based on shubhadip rollup setup [shubhadip/vue3-component-library](https://github.com/shubhadip/vue3-component-library) )
-- Using PostCSS to include CSS Files
-- Minified Build
-- Includes VuePress for documenting your library
+- Vuejs 3.0 Based Datepicker
+- Single Date Selection
+- Date Range Selection
 
-# Library Project Documentaation
-This is a guide of how to setup and build your library project
-Multiple components can be included in the library.
-
-### Including your components
-Each component has a seperated folder add inside the components folder.
-Inside each component's folder, its **.vue** file and **.css** files are included. In addition an **index.ts** file
-exports the specified component in the final bundle.
-
-Each of there Components are also included as exports in the **index.ts** file located inside the **/components** folder
-
-### Initializing the Project
+# Usage of Datepicker
+### Using the Library as a Plugin
 ```javascript
-npm run install
-```
-
-### Building the library
-```javascript
-npm run build
-```
-
-## Using the library after being built
-
-#### Using the library as a Plugin
-
-At the VueJS Initialization on the main.ts or .js file of the project
-add the following.
-
-```javascript
-import { TestWorld } from 'vue3-component-library';
+import { ChronoCraftDatePicker } from 'chronocraft-datepicker-vue';
     ...
-app.use(TestWorld)
+app.use(ChronoCraftDatePicker)
 ```
 
-#### Using seperate components of the library inside you project
-
+### Using seperate components of the library inside you project
 When you want to import a specific component from the library into a dedicated place inside your code
-
 ```javascript
-import { TestWorld } from 'vue3-component-library';
+import { DatePicker } from 'chronocraft-datepicker-vue';
 ...
 components:{
-TestWorld
+DatePicker
 }
 ```
 
-## Playing with the VuePress Documentation
-
-In order to run the Vuepress development server
-
-```javascript
-npm run docs:dev
-```
-
-
-In order to build the final docs
-
-```javascript
-npm run docs:build
-```

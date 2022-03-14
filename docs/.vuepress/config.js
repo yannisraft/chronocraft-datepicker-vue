@@ -1,6 +1,6 @@
 module.exports = {
-    title: "Chronocraft Vue3 Library Template",
-    description: "This is a description",
+    title: "Chronocraft DatePicker - A VueJS 3.0 Efficient DatePicker Component",
+    description: "The Chronocraft DatePicker is a flexible datepicker component created for Vue3",
     theme: '@vuepress/theme-default',
     base: '/',
     themeConfig: {
