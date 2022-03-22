@@ -6,6 +6,10 @@ The Chronocraft DatePicker is a flexible datepicker component created for Vue3
 - Single Date Selection
 - Date Range Selection
 
+
+![alt text](https://gamepencils.com/datepicker_gif.gif)
+
+
 # Usage of Datepicker
 ### Using the Library as a Plugin
 ```javascript

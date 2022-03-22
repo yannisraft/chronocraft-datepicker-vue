@@ -12,6 +12,12 @@
     </template>
 </DatePicker>
 <p>Selected Date: {{ selecteddata }}</p>
+<h3>Datepicker Position Adjustment</h3>
+<DatePicker :rangepicker="true" :showselecteddate="true" style="float: right; margin-right: 30px;" @on-date-selected="OnDateSelected">
+    <template v-slot:inputfield="slotProps">
+        <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
+    </template>
+</DatePicker>
 </template>
 
 <script>

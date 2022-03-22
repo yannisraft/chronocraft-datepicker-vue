@@ -1,57 +1,60 @@
 <template>
 <div class="datepicker-container">
     <div class="pickerbtn" @click="OnFocusInput(true)" @mouseover="inputhovering = true" @mouseleave="inputhovering = false">
-        <slot :formatSelected="formatSelected"  name="inputfield">
+        <slot :formatSelected="formatSelected" name="inputfield">
             <!-- <input type="text" v-model="formatSelected" id="date" @focusin="OnFocusInput(true)" @mouseover="inputhovering = true" @mouseleave="inputhovering = false" name="datepicker" class="datepicker-input" /> -->
-            <input type="text" v-model="formatSelected" id="date"  name="datepicker" class="datepicker-input" />
+            <input type="text" v-model="formatSelected" id="date" name="datepicker" class="datepicker-input" />
         </slot>
     </div>
-    <div class="datepicker-panel notabsolute" @mouseover="datepickerhovering = true" @mouseleave="datepickerhovering = false" :style="{visibility: showdatepicker ? 'visible' : 'hidden'}">
-        <div class="datepicker-header-year unselectable">
-            <h4 @click="OpenSelectYear()">{{ yearlabel }}</h4>
-        </div>
-        <div class="datepicker-header-month unselectable">
-            <div v-if="!selectMonthActive && !selectYearActive" class="datepicker-arrows arrow-left" @click="PreviousMonth()">&lt;</div>
-            <h3 @click="OpenSelectMonth()">{{ monthlabel }}</h3>
-            <div v-if="!selectMonthActive && !selectYearActive" class="datepicker-arrows arrow-right" @click="NextMonth()">&gt;</div>
-        </div>
-        <div v-if="showselecteddate" class="datepicker-header-fulldate unselectable">
-            <h6>{{ fulldatelabel }}</h6>
-            <h6 v-if="rangepicker">{{ rangeTotalDays }} days</h6>
-        </div>
-        <div class="datepicker-month-container">
-            <div class="datepicker-weekdays unselectable">
-                <div>Sun</div>
-                <div>Mon</div>
-                <div>Tue</div>
-                <div>Wed</div>
-                <div>Thu</div>
-                <div>Fri</div>
-                <div>Sat</div>
+    <div class="fixed-datepicker-container" :ref="el => {datepicker_container_element = el}">
+        <div class="datepicker-panel" @mouseover="datepickerhovering = true" @mouseleave="datepickerhovering = false" :style="{visibility: showdatepicker ? 'visible' : 'hidden', 'left': positionX, 'top': positionY}" :ref="el => {datepicker_element = el}">
+            <div class="datepicker-header-year unselectable">
+                <h4 @click="OpenSelectYear()">{{ yearlabel }}</h4>
             </div>
-            <div class="datepicker-days">
-                <div v-for="(weekarray, index) in daysArray" class="days-row">
-                    <div class="days-row">
-                        <div v-for="(dayitem, index) in weekarray" @click="SelectDay(dayitem)" :class="[{notcurrentmonth: !dayitem.currentMonth}, { today: isToday(dayitem) }, { dayselected: isSelectedDay(dayitem) === 1}, { 'dayselected-start': isSelectedDay(dayitem) === 2}, { 'dayselected-end': isSelectedDay(dayitem) === 3}, { rangeday: isRangeDay(dayitem)}, 'datepicker-day', 'unselectable']">{{ dayitem.date.getDate() }}</div>
+            <div class="datepicker-header-month unselectable">
+                <div v-if="!selectMonthActive && !selectYearActive" class="datepicker-arrows arrow-left" @click="PreviousMonth()">&lt;</div>
+                <h3 @click="OpenSelectMonth()">{{ monthlabel }}</h3>
+                <div v-if="!selectMonthActive && !selectYearActive" class="datepicker-arrows arrow-right" @click="NextMonth()">&gt;</div>
+            </div>
+            <div v-if="showselecteddate" class="datepicker-header-fulldate unselectable">
+                <h6>{{ fulldatelabel }}</h6>
+                <h6 v-if="rangepicker">{{ rangeTotalDays }} days</h6>
+            </div>
+            <div class="datepicker-month-container">
+                <div class="datepicker-weekdays unselectable">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="datepicker-days">
+                    <div v-for="(weekarray, index) in daysArray" class="days-row">
+                        <div class="days-row">
+                            <div v-for="(dayitem, index) in weekarray" @click="SelectDay(dayitem)" :class="[{notcurrentmonth: !dayitem.currentMonth}, { today: isToday(dayitem) }, { dayselected: isSelectedDay(dayitem) === 1}, { 'dayselected-start': isSelectedDay(dayitem) === 2}, { 'dayselected-end': isSelectedDay(dayitem) === 3}, { rangeday: isRangeDay(dayitem)}, 'datepicker-day', 'unselectable']">{{ dayitem.date.getDate() }}</div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div v-if="selectMonthActive" class="datepicker-monthselect-container">
-                <div v-for="(months, months_index) in monthNamesArray" class="monthselect-row">
-                    <div v-for="(month, month_index) in months" @click="SelectMonth(months_index, month_index)" :class="['monthselect-item','unselectable', { 'monthselect-selected': isSelectedMonth(months_index, month_index) }]">{{ month }}</div>
-                </div>
-            </div>
-            <div v-if="selectYearActive" class="datepicker-yearselect-container">
-                <div class="datepicker-arrows-year arrow-left" @click="UpdateYears(false)"></div>
-                <div class="datepicker-years-container">
-                    <div v-for="(years, years_index) in yearsNamesArray" class="yearselect-row">
-                        <div v-for="(year, month_index) in years" @click="SelectYear(year)" :class="['yearselect-item','unselectable', { 'yearselect-selected': isSelectedYear(year) }]">{{ year }}</div>
+                <div v-if="selectMonthActive" class="datepicker-monthselect-container">
+                    <div v-for="(months, months_index) in monthNamesArray" class="monthselect-row">
+                        <div v-for="(month, month_index) in months" @click="SelectMonth(months_index, month_index)" :class="['monthselect-item','unselectable', { 'monthselect-selected': isSelectedMonth(months_index, month_index) }]">{{ month }}</div>
                     </div>
                 </div>
-                <div class="datepicker-arrows-year arrow-right" @click="UpdateYears(true)"></div>
+                <div v-if="selectYearActive" class="datepicker-yearselect-container">
+                    <div class="datepicker-arrows-year arrow-left" @click="UpdateYears(false)"></div>
+                    <div class="datepicker-years-container">
+                        <div v-for="(years, years_index) in yearsNamesArray" class="yearselect-row">
+                            <div v-for="(year, month_index) in years" @click="SelectYear(year)" :class="['yearselect-item','unselectable', { 'yearselect-selected': isSelectedYear(year) }]">{{ year }}</div>
+                        </div>
+                    </div>
+                    <div class="datepicker-arrows-year arrow-right" @click="UpdateYears(true)"></div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 </template>
 
@@ -64,6 +67,7 @@ import {
     ref,
     reactive,
     onMounted,
+    onUpdated,
     onBeforeMount,
     computed,
     getCurrentInstance
@@ -143,6 +147,10 @@ export default defineComponent({
         ]);
         let selectYearActive = ref(false);
         let selectMonthActive = ref(false);
+        let datepicker_element: any = ref(null);
+        let datepicker_container_element: any = ref(null);
+        let positionX = ref("auto");
+        let positionY = ref("auto");
 
         function Initialize() {
             RenderMonth(activeDate);
@@ -155,6 +163,7 @@ export default defineComponent({
                     showdatepicker.value = show;
                 }
             } else {
+                CalculateDatepickerPosition();
                 showdatepicker.value = show;
             }
 
@@ -300,18 +309,20 @@ export default defineComponent({
                 //this.$forceUpdate();
                 _this.$forceUpdate();
 
-                setTimeout(()=> {
-                    if(props.autohide) showdatepicker.value = false;                    
-                    context.emit("on-date-selected", {date: dayitem.date});
+                setTimeout(() => {
+                    if (props.autohide) showdatepicker.value = false;
+                    context.emit("on-date-selected", {
+                        date: dayitem.date
+                    });
                 }, 500);
-                
+
             } else {
                 if (rangePickStatus === 0) {
                     selectedDate.value = dayitem.date;
                     selectedDate_end.value = dayitem.date;
                     fulldatelabel.value = formatDate(dayitem.date, 'dd MMMM yyyy') + ' - ?';
                     _this.$forceUpdate();
-                    rangePickStatus = 1;                    
+                    rangePickStatus = 1;
                 } else if (rangePickStatus === 1) {
                     if (dayitem.date < selectedDate.value) {
                         selectedDate_end.value = selectedDate.value;
@@ -325,11 +336,14 @@ export default defineComponent({
                     rangeTotalDays.value = getDiffInDays(selectedDate_end.value, selectedDate.value);
                     _this.$forceUpdate();
                     rangePickStatus = 0;
-                    
-                    setTimeout(()=> {
-                        if(props.autohide) showdatepicker.value = false;   
-                        context.emit("on-date-selected", {date: selectedDate.value, enddate: selectedDate_end.value});
-                    }, 500);                    
+
+                    setTimeout(() => {
+                        if (props.autohide) showdatepicker.value = false;
+                        context.emit("on-date-selected", {
+                            date: selectedDate.value,
+                            enddate: selectedDate_end.value
+                        });
+                    }, 500);
                 } else {
 
                 }
@@ -392,8 +406,42 @@ export default defineComponent({
             }
         }
 
+        function CalculateDatepickerPosition() {
+            if (datepicker_element.value !== null && datepicker_container_element.value !== null) {
+
+                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+                let datepicker_rect = (datepicker_element.value).getBoundingClientRect();
+                let datepicker_container_rect = (datepicker_container_element.value).getBoundingClientRect();
+
+                let datepicker_width = datepicker_rect.width;
+                let datepicker_height = datepicker_rect.height;
+                let margin = 10;
+
+                // Calculate Datepicker new position
+                if (datepicker_container_rect.left + datepicker_width + margin > vw) {
+                    let newPositionX = (vw - datepicker_width - margin);
+                    positionX.value = newPositionX + "px";
+                }
+
+                if (datepicker_container_rect.top + datepicker_height + margin > vh) {
+                    let newPositionY = (vh - datepicker_height - margin);
+                    positionY.value = newPositionY + "px";
+                }
+            }
+        }
+
         onMounted(() => {
             Initialize();
+
+            window.addEventListener('resize', function (event) {
+                CalculateDatepickerPosition();
+            }, true);
+        });
+
+        onUpdated(() => {
+            
         });
 
         onBeforeMount(() => {
@@ -464,7 +512,7 @@ export default defineComponent({
         const isRangeDay = computed(() => {
             return (dayitem: any) => {
                 var isRange = false;
-                if(props.rangepicker) isRange = isDateBetweenDatesExcluding(selectedDate.value, selectedDate_end.value, dayitem.date);
+                if (props.rangepicker) isRange = isDateBetweenDatesExcluding(selectedDate.value, selectedDate_end.value, dayitem.date);
                 return isRange;
             }
         });
@@ -499,7 +547,11 @@ export default defineComponent({
             isSelectedYear,
             isSelectedDay,
             isRangeDay,
+            positionX,
+            positionY,
             formatSelected,
+            datepicker_element,
+            datepicker_container_element,
             rangeTotalDays,
             PreviousMonth,
             NextMonth,
@@ -509,6 +561,7 @@ export default defineComponent({
             SelectMonth,
             SelectYear,
             UpdateYears,
+            CalculateDatepickerPosition,
             OnFocusInput
         }
     }

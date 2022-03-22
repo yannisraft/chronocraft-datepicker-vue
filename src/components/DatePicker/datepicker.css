@@ -16,18 +16,23 @@
     outline: none;
 }
 
+.fixed-datepicker-container {
+    position: absolute;
+    width: 300px;
+    top: auto;
+}
+
 .datepicker-panel {
     width: 300px;
     height: auto;
     border: 1px solid #c5c5c5;
     background: #f8f8f8;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 2px;
-    position: absolute;
-    top: auto;
+    position: fixed;    
     margin-top: 2px;
     display: flex;
     flex-direction: column;
-    z-index: 1000000;
+    z-index: 100000000;
     color: #000000;
 }
 
