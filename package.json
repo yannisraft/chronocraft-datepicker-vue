@@ -1,12 +1,15 @@
 {
   "name": "chronocraft-datepicker-vue",
   "buildname": "chronocraftdatepickervuelib",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Chronocraft DatePicker - A VueJS 3.0 Efficient DatePicker Component",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "unpkg": "dist/chronocraft-vue3-lib.min.js",
   "types": "types/index.d.ts",
+  "license": "MIT",
+  "author": "Raftopoulos Yannis - Chronocraft Tools",
+  "keywords": ["datepicker", "vue", "rangepicker", "vue-component"],
   "files": [
     "dist/*",
     "src",
