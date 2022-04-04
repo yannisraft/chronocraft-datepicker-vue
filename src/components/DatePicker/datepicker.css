@@ -91,7 +91,7 @@
 }
 
 .datepicker-weekdays div {
-    padding: .5em;
+    /* padding: .5em; */
     flex: 1;
 }
 
