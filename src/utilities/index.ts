@@ -1,2 +1,4 @@
 import { addDays, addMonths, getDiff, getDiffInDays, isDateBetweenDatesExcluding, twoDigitPad, formatDate, enumerateDaysBetweenDates, enumerateStringDaysBetweenDates, checkIfWeekendDay, daysMatch } from "./dateUtilities";
-export { addDays, addMonths, getDiff, getDiffInDays, isDateBetweenDatesExcluding, twoDigitPad, formatDate, enumerateDaysBetweenDates, enumerateStringDaysBetweenDates, checkIfWeekendDay, daysMatch };
+import { ThemeManager, Theme } from "./thememanager";
+
+export { ThemeManager, Theme, addDays, addMonths, getDiff, getDiffInDays, isDateBetweenDatesExcluding, twoDigitPad, formatDate, enumerateDaysBetweenDates, enumerateStringDaysBetweenDates, checkIfWeekendDay, daysMatch };

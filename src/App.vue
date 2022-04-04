@@ -1,50 +1,84 @@
 <template>
-<h1>Chronocraft Library Test Playground</h1>
-<br/>
-<h3>Datepicker Using Input field</h3>
-<DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;">
-</DatePicker>
-<br/>
-<h3>Datepicker Using Icon</h3>
-<DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;" @on-date-selected="OnDateSelected">
-    <template v-slot:inputfield="slotProps">
-        <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
-    </template>
-</DatePicker>
-<p>Selected Date: {{ selecteddata }}</p>
-<h3>Datepicker Position Adjustment</h3>
-<DatePicker :rangepicker="true" :showselecteddate="true" style="float: right; margin-right: 30px;" @on-date-selected="OnDateSelected">
-    <template v-slot:inputfield="slotProps">
-        <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
-    </template>
-</DatePicker>
+<div>
+    <h1>Chronocraft Library Test Playground</h1>
+    <br />
+    <h3>Datepicker Using Input field</h3>
+    <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;">
+    </DatePicker>
+    <br />
+    <h3>Datepicker Using Icon</h3>
+    <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;" @on-date-selected="OnDateSelected">
+        <template v-slot:inputfield="slotProps">
+            <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
+        </template>
+    </DatePicker>
+    <p>Selected Date: {{ selecteddata }}</p>
+    <h3>Datepicker Position Adjustment</h3>
+    <DatePicker :rangepicker="true" :showselecteddate="true" style="float: right; margin-right: 30px;" @on-date-selected="OnDateSelected">
+        <template v-slot:inputfield="slotProps">
+            <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
+        </template>
+    </DatePicker>
+    <div style="margin-top: 80px; float: right;width: 100%;">
+        <button @click="ApplyTheme('Flat')" class="stylemodebtn" type="button">Theme Flat</button>
+        <button @click="ApplyTheme('Stylus')" class="stylemodebtn" type="button">Theme Stylus</button>
+        <button @click="ApplyTheme('Colored')" class="stylemodebtn" type="button">Theme Colored</button>
+    </div>
+</div>
 </template>
 
-<script>
+<script lang="ts">
 import {
     defineComponent
 } from 'vue';
 import DatePicker from './components/DatePicker/DatePicker.vue';
 
 import {
+    Theme,
+    ThemeManager,
     formatDate
 } from "./utilities/index";
 
 export default defineComponent({
-    name: 'App',    
+    name: 'App',
     components: {
         DatePicker
     },
     data: function () {
         return {
-          selecteddata: '-'
+            selecteddata: '-',
+            themeManager: new ThemeManager(),
+            themes: [
+                {
+                    name: "Flat",
+                    link: "/themes/cc.theme.flat.css"
+                },
+                {
+                    name: "Stylus",
+                    link: "/themes/cc.theme.stylus.css"
+                },
+                {
+                    name: "Colored",
+                    link: "/themes/cc.theme.colored.css"
+                }
+            ]
         }
     },
     methods: {
-      OnDateSelected(selected) {
-        console.log(selected.date);
-        this.selecteddata = formatDate(selected.date, 'dd MMM yyyy') + ' - ' + formatDate(selected.enddate, 'dd MMM yyyy');
-      }
+        OnDateSelected(selected: any) {
+            this.selecteddata = formatDate(selected.date, 'dd MMM yyyy') + ' - ' + formatDate(selected.enddate, 'dd MMM yyyy');
+        },
+        ApplyTheme(themename: string) {
+            let theme = this.themes.find(i => i.name === themename);
+            if(theme)
+            {
+                this.themeManager.theme = theme.name;
+            }
+        }
+    },
+    mounted() {       
+        this.themeManager.setThemes(this.themes);
+        this.themeManager.theme = 'Flat';
     }
 });
 </script>
@@ -98,5 +132,9 @@ h1 {
     .widget-container {
         max-width: 70%;
     }
+}
+
+.stylemodebtn {
+    margin-left: 30px;
 }
 </style>
