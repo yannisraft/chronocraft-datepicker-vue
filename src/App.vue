@@ -1,30 +1,32 @@
 <template>
-<div>
-    <h1>Chronocraft Library Test Playground</h1>
-    <br />
-    <h3>Datepicker Using Input field</h3>
-    <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;">
-    </DatePicker>
-    <br />
-    <h3>Datepicker Using Icon</h3>
-    <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;" @on-date-selected="OnDateSelected">
-        <template v-slot:inputfield="slotProps">
-            <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
-        </template>
-    </DatePicker>
-    <p>Selected Date: {{ selecteddata }}</p>
-    <h3>Datepicker Position Adjustment</h3>
-    <DatePicker :rangepicker="true" :showselecteddate="true" style="float: right; margin-right: 30px;" @on-date-selected="OnDateSelected">
-        <template v-slot:inputfield="slotProps">
-            <span class="material-icons-outlined" style="cursor: pointer;">date_range</span>
-        </template>
-    </DatePicker>
-    <div style="margin-top: 80px; float: right;width: 100%;">
-        <button @click="ApplyTheme('Flat')" class="stylemodebtn" type="button">Theme Flat</button>
-        <button @click="ApplyTheme('Stylus')" class="stylemodebtn" type="button">Theme Stylus</button>
-        <button @click="ApplyTheme('Colored')" class="stylemodebtn" type="button">Theme Colored</button>
+    <div class="ccr-panel">
+        <h1>Chronocraft Library Test Playground</h1>
+        <br />
+        <h3>Datepicker Using Input field</h3>
+        <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;">
+        </DatePicker>
+        <br />
+        <h3>Datepicker Using Icon</h3>
+        <DatePicker :rangepicker="true" :showselecteddate="true" style="margin: 0px auto;" @on-date-selected="OnDateSelected">
+            <template v-slot:inputfield="slotProps">
+                <span class="ccr-icon material-icons-outlined" style="cursor: pointer;">date_range</span>
+            </template>
+        </DatePicker>
+        <p>Selected Date: {{ selecteddata }}</p>
+        <div class="absolutepos">
+            <h4>Datepicker Position Adjustment</h4>
+            <DatePicker :rangepicker="true" :showselecteddate="true" style="float: right; margin-right: 30px;" @on-date-selected="OnDateSelected">
+                <template v-slot:inputfield="slotProps">
+                    <span class="ccr-icon material-icons-outlined" style="cursor: pointer;">date_range</span>
+                </template>
+            </DatePicker>
+        </div>        
+        <div style="margin-top: 80px; float: right;width: 100%;">
+            <button @click="ApplyTheme('Flat')" class="stylemodebtn" type="button">Theme Flat</button>
+            <button @click="ApplyTheme('Stylus')" class="stylemodebtn" type="button">Theme Stylus</button>
+            <button @click="ApplyTheme('Colored')" class="stylemodebtn" type="button">Theme Colored</button>
+        </div>
     </div>
-</div>
 </template>
 
 <script lang="ts">
@@ -33,8 +35,8 @@ import {
 } from 'vue';
 import DatePicker from './components/DatePicker/DatePicker.vue';
 
+import { Theme } from "./interfaces";
 import {
-    Theme,
     ThemeManager,
     formatDate
 } from "./utilities/index";
@@ -51,15 +53,15 @@ export default defineComponent({
             themes: [
                 {
                     name: "Flat",
-                    link: "/themes/cc.theme.flat.css"
+                    link: "/themes/ccr.theme.flat/ccr.theme.flat.css"
                 },
                 {
                     name: "Stylus",
-                    link: "/themes/cc.theme.stylus.css"
+                    link: "/themes/ccr.theme.stylus/ccr.theme.stylus.css"
                 },
                 {
-                    name: "Colored",
-                    link: "/themes/cc.theme.colored.css"
+                    name: "Opus",
+                    link: "/themes/ccr.theme.opus/ccr.theme.opus.css"
                 }
             ]
         }
@@ -78,23 +80,16 @@ export default defineComponent({
     },
     mounted() {       
         this.themeManager.setThemes(this.themes);
-        this.themeManager.theme = 'Flat';
+        this.themeManager.theme = 'Stylus';
     }
 });
 </script>
 
 <style>
-#app {
-    font-family: 'Advent Pro', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+#app {    
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
-}
-
-h1 {
-    font-weight: 400 !important;
 }
 
 .widget-container {
@@ -136,5 +131,21 @@ h1 {
 
 .stylemodebtn {
     margin-left: 30px;
+}
+
+.absolutepos {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+}
+
+.absolutepos h4 {
+    margin: 0px 20px 0px 0px;
+}
+
+.ccr-panel {
+    width: 50%;
+    margin: 0px auto;
 }
 </style>

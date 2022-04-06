@@ -1,5 +1,6 @@
 import { App as Application, Plugin } from "vue";
 import * as components from './components';
+import * as thememanager from './utilities/thememanager';
 
 const Plugin: Plugin = {
     install(app: Application) {  
@@ -13,3 +14,4 @@ export default Plugin
 
 // Allow component use individually
 export * from './components';
+export * from './utilities/thememanager';

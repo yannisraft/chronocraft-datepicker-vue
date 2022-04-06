@@ -7,8 +7,8 @@
         </slot>
     </div>
     <div class="fixed-datepicker-container" :ref="el => {datepicker_container_element = el}">
-        <div class="datepicker-panel" @mouseover="datepickerhovering = true" @mouseleave="datepickerhovering = false" :style="{visibility: showdatepicker ? 'visible' : 'hidden', 'left': positionX, 'top': positionY}" :ref="el => {datepicker_element = el}">
-            <div class="datepicker-header-year unselectable">
+        <div class="ccr-datepicker-panel" @mouseover="datepickerhovering = true" @mouseleave="datepickerhovering = false" :style="{visibility: showdatepicker ? 'visible' : 'hidden', 'left': positionX, 'top': positionY}" :ref="el => {datepicker_element = el}">
+            <div class="ccr-.datepicker-header-year unselectable">
                 <h4 @click="OpenSelectYear()">{{ yearlabel }}</h4>
             </div>
             <div class="datepicker-header-month unselectable">

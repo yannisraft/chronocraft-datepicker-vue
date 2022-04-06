@@ -121,7 +121,7 @@ const baseConfig = {
     ],
     babel: {
       exclude: "node_modules/**",
-      extensions: [".js", ".jsx", ".vue"],
+      extensions: [".js", ".jsx", ".vue", ".ts", ".tsx"],
       babelHelpers: "bundled"
     }
   }

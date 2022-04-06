@@ -1,7 +1,7 @@
 {
   "name": "chronocraft-datepicker-vue",
   "buildname": "chronocraftdatepickervuelib",
-  "version": "0.1.2",
+  "version": "0.1.11",
   "description": "Chronocraft DatePicker - A VueJS 3.0 Efficient DatePicker Component",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -10,10 +10,11 @@
   "license": "MIT",
   "author": "Raftopoulos Yannis - Chronocraft Tools",
   "keywords": [
-    "datpicker",
+    "datepicker",
     "vue",
     "rangepicker",
-    "vue-component"
+    "vue-component",
+    "themes"
   ],
   "files": [
     "dist/*",
@@ -48,6 +49,8 @@
     "vue": "^3.2.30"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/plugin-transform-classes": "^7.16.7",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-typescript": "^7.16.7",
     "@rollup/plugin-alias": "^3.1.9",
@@ -66,6 +69,8 @@
     "@vue/test-utils": "^2.0.0-0",
     "@vue/vue3-jest": "^27.0.0-alpha.1",
     "autoprefixer": "^10.4.2",
+    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
     "babel-jest": "^27.0.6",
     "cross-env": "^7.0.3",
     "cypress": "^8.3.0",

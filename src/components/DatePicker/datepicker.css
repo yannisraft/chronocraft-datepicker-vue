@@ -1,15 +1,25 @@
+button {
+    padding: 5px 10px;
+}
+
+input {
+    height: 25px;
+    text-indent: 10px;
+    min-width: 240px;
+}
+
 .datepicker-container {
     position: relative;
     width: fit-content;
 }
 
-.datepicker-input {
+/* .datepicker-input {
     height: 25px;
     border: 1px solid #c5c5c5;
     box-shadow: rgb(0 0 0 / 24%) 0px 3px 2px;
     text-indent: 10px;
     width: 240px;
-}
+} */
 
 .datepicker-input:focus-visible {
     border: 1px solid #646464;
@@ -22,7 +32,7 @@
     top: auto;
 }
 
-.datepicker-panel {
+.ccr-datepicker-panel {
     width: 300px;
     height: auto;
     border: 1px solid #c5c5c5;
@@ -36,20 +46,20 @@
     color: #000000;
 }
 
-.datepicker-header-year {
+.ccr-.datepicker-header-year {
     height: 40px;
     width: 100%;
     background-color: #ffffff;
 }
 
-.datepicker-header-year h4 {
+.ccr-.datepicker-header-year h4 {
     font-size: 14pt;
     margin: 10px 0px;
     font-weight: 500;
     cursor: pointer;
 }
 
-.datepicker-header-year h4:hover {
+.ccr-.datepicker-header-year h4:hover {
     color: #8bb4e2;
 }
 

@@ -1,0 +1,84 @@
+body
+{
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #1e193b;
+}
+
+
+h1, h2, h3, h4, h5 {
+    color: #f6ede5;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 1.17em;
+    font-weight: 400;
+}
+
+button {
+    box-shadow: rgb(0 0 0 / 24%) 0px 2px 1px;
+    border: 1px solid #c5c5c5;
+    padding: 5px 10px;
+}
+
+input {
+    height: 30px;
+    border: 0px solid #fff;
+    box-shadow: rgb(0 0 0 / 18%) 0px 1px 1px;
+    text-indent: 10px;
+    min-width: 240px;
+    background-color: #726b97;
+    border-radius: 5px;
+    padding: 5px;
+    color: #af9e9e;
+}
+
+button {
+    background-color: #463f71;
+    border-radius: 5px;
+    border: 0px solid;
+    color: #f9e6d5;
+    padding: 10px 20px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+p {
+    color: #f6ede5;
+}
+
+.ccr-panel
+{
+    border-radius: 15px;
+    background-color: #302b4f;
+    box-shadow: 3.6px 4.3px 11.6px -20px rgba(0, 0, 0, 0.03),
+                16px 19px 62px -20px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+}
+
+.ccr-icon {
+    color: #f6ede5;;
+}
+
+.ccr-datepicker-panel
+{
+    box-shadow:
+  7.5px 10px 10.6px -20px rgba(0, 0, 0, 0.17),
+  30px 40px 57px -20px rgba(0, 0, 0, 0.46);
+  border-radius: 15px;
+}
+
+..datepicker-header-year {
+    border-radius: 15px 15px 0px 0px;
+}
