@@ -59,3 +59,17 @@ DatePicker
 |  Name  | hasprops  | Description  |
 |---|---|---|
 |  inputfield  | no  | Overrides the datepicker's input field and custom elements can be entered like a button or icon
+
+
+
+
+## Check my other Free AI tools and Tools
+
+#### Free AI Tools
+[Free Online AI Book Title Generator 2024](https://www.aeroscroll.com/free-online-ai-book-title-generator-2024/)
+[Free online AI Generation Image to Caption Tool](https://www.aeroscroll.com/free-online-ai-generation-image-to-caption-tool/)
+[Free AI Generator for Instagram Attitude Captions](https://www.aeroscroll.com/free-generator-for-instagram-attitude-captions/)
+[Free AI Story Generator from Image](https://www.aeroscroll.com/free-ai-story-generator-from-image/)
+
+#### Wordpress Free plugins
+[Aeroscroll Gallery](https://wordpress.org/plugins/aeroscroll-gallery/)
