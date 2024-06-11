@@ -63,7 +63,7 @@ DatePicker
 
 
 
-## Check my other Free AI tools and Tools
+## Check my other Free AI Tools and Plugins
 
 #### Free AI Tools
 [Free Online AI Book Title Generator 2024](https://www.aeroscroll.com/free-online-ai-book-title-generator-2024/)
